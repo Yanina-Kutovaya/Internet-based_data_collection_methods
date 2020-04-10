@@ -76,7 +76,8 @@ n = len(div)
 for i in range(len(div_2)):
     df[n + i] = {'name': div_2[i].findChildren()[1].text.replace('\xa0', ' '),
                  'link': main_link_2 + div_2[i].findChildren()[1].get('href'),
-                 'site': main_link_2, 'min_salary': np.nan,
+                 'site': main_link_2, 
+                 'min_salary': np.nan,
                  'max_salary': np.nan,
                  'currency': np.nan}
 
