@@ -96,9 +96,3 @@ pprint(df)
 
 with open('vacancies.json', 'w') as outfile:
     json.dump(df, outfile)
-
-
-
-
-
-
