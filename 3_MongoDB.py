@@ -11,8 +11,7 @@ from pprint import pprint
 
 def to_MongoDB(link, json_files):
     client = MongoClient('localhost', 27017)
-    vacancies = client['vacancies']
-    vacancies.Russia.delete_many({})  #################################
+    vacancies = client['vacancies']    
     for file in json_files:
         with open(link + file) as f:
             df = json.load(f)
@@ -34,5 +33,4 @@ if __name__ == '__main__':
 
     limit = int(input('Введите минимально приемлемый уровень зарплаты: '))
     salary_query(limit)
-    # for i in vacancies.Russia.find({'$or': [{'min_salary': {'$gt': limit}}, {'max_salary': {'$gt': limit}}]}):
-    #    pprint(i)
+
