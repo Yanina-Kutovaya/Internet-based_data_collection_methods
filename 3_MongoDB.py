@@ -14,8 +14,7 @@ def to_MongoDB(link, json_files):
     for file in json_files:
         with open(link + file) as f:
             df = json.load(f)
-        for i in df:
-            vacancies.Russia.insert_one(df[i])
+        vacancies.Russia.insert_many([df[i] for i in df])
     return vacancies
 
 
