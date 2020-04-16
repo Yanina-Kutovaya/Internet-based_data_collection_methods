@@ -59,8 +59,8 @@ for file in json_files:
                           df[i]['name'],
                           df[i]['link'],
                           df[i]['site'],
-                          fillna(df[i]['min_salary'], default=0),
-                          fillna(df[i]['max_salary'], default=0),
+                          fillna(df[i]['min_salary']),
+                          fillna(df[i]['max_salary']),
                           df[i]['currency'])
             data.append(s)
 
