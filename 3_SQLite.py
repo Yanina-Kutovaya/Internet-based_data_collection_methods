@@ -7,17 +7,12 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 
-def fillna(value, default=0):
-    if math.isnan(value):
-        return default
-    return value
+def fillna(value, default=0):    
+    return default if math.isnan(value) else value
 
 
 def zero_to_nan(value):
-    if value == 0:
-        return np.nan
-    else:
-        return value
+    return np.nan if value == 0 else value
 
 
 engine = create_engine('sqlite:///vacancies.db', echo=True)
