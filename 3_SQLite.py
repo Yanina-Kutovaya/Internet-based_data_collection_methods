@@ -7,14 +7,6 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 
-def fillna(value, default=0):    
-    return default if math.isnan(value) else value
-
-
-def zero_to_nan(value):
-    return np.nan if value == 0 else value
-
-
 engine = create_engine('sqlite:///vacancies.db', echo=True)
 Base = declarative_base()
 
@@ -45,18 +37,23 @@ Session = sessionmaker(bind=engine)
 
 link = 'C:/Users/ASER/PycharmProjects/internet_data_collection/'
 json_files = ['vacancies_1.json', 'vacancies_2.json']
+
+
+def fillna(value, default=0):
+    return default if math.isnan(value) else value
+
+
+def zero_to_nan(value):
+    return np.nan if value == 0 else value
+
+
 data = []
 for file in json_files:
     with open(link + file) as f:
         df = json.load(f)
         for i in df:
-            s = Vacancies(df[i]['id'],
-                          df[i]['name'],
-                          df[i]['link'],
-                          df[i]['site'],
-                          fillna(df[i]['min_salary']),
-                          fillna(df[i]['max_salary']),
-                          df[i]['currency'])
+            s = Vacancies(df[i]['id'], df[i]['name'], df[i]['link'], df[i]['site'], fillna(df[i]['min_salary']),
+                          fillna(df[i]['max_salary']), df[i]['currency'])
             data.append(s)
 
 session = Session()
