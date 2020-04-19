@@ -39,11 +39,16 @@ def to_date(a):
     if re.findall(':', a) == [':']:
         a = s
     else:
-        s1 = a.split(' ')[0]
-        if len(s1) == 2:
-            a = s1 + s[2:]
-        elif len(s1) == 1:
-            a = '0' + s1 + s[2:]
+        d, m, y = s.split('.')
+        d1 = a.split(' ')[0] if len(a.split(' ')[0]) == 2 else '0' + a.split(' ')[0]
+        if int(d1) <= int(d):
+            a = d1 + s[2:]
+        else:
+            if int(m) != 1:
+                m1 = str(int(m) - 1) if len(str(int(m) - 1)) == 2 else '0' + str(int(m) - 1)
+                a = d1 + '.' + m1 + s[5:]
+            else:
+                a = d1 + '.12.' + str(int(y) - 1)
     return a
 
 
