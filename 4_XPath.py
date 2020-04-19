@@ -92,16 +92,17 @@ def news(headers):
     df = lenta_ru(headers, df)
     df = mail_ru(headers, df)
     df = yandex_news(headers, df)
-    return df
+
+    df_list = []
+    for i in df:
+        df_list.append(df[i])
+    return df_list
 
 
 if __name__ == '__main__':
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)\
                Chrome/80.0.3987.149 Safari/537.36'}
-    df = news(headers)
-    df_list = []
-    for i in df:
-        df_list.append(df[i])
+    df_list = news(headers)
 
     client = MongoClient('localhost', 27017)
     news = client['news']
