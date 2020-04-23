@@ -70,8 +70,8 @@ COOKIES_ENABLED = True
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'jobparser.pipelines.JobparserPipeline': 200,
-    'jobparser.pipelines.JobparserItemAdjustmentsPipeline': 300,
+    'jobparser.pipelines.JobparserPipeline': 300,
+    'jobparser.pipelines.JobparserItemAdjustmentsPipeline': 200,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
