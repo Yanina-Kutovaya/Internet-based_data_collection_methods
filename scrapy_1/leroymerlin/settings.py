@@ -24,6 +24,7 @@ LOG_LABEL = 'DEBUG'  # 'INFO', 'ERROR'
 #LOG_FILE = 'logs.txt'
 
 IMAGES_STORE = 'images'
+MEDIA_ALLOW_REDIRECTS = True
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
@@ -73,9 +74,8 @@ COOKIES_ENABLED = True
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
     'scrapy_1.leroymerlin.pipelines.LeroymerlinPipeline': 300,
+    'scrapy_1.leroymerlin.pipelines.LeroymerlinImagesPipeline': 200,
 }
-#    'scrapy_1.leroymerlin.pipelines.LeroymerlinPhotosPipeline': 200
-#}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html

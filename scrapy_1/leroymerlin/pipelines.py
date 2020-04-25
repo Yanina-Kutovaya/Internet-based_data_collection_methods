@@ -5,9 +5,11 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 import scrapy
-from scrapy.pipelines.images import ImagesPipeline
-from pymongo import MongoClient
 import os
+from urllib.parse import urlparse
+from scrapy.pipelines.images import ImagesPipeline
+from scrapy.exceptions import DropItem
+from pymongo import MongoClient
 
 
 class LeroymerlinPipeline(object):
@@ -22,24 +24,17 @@ class LeroymerlinPipeline(object):
         return item
 
 
-class LeroymerlinPhotosPipeline(ImagesPipeline):
-    def get_media_requests(self, item, info):
-        if item['photos']:
-            for img in item['photos']:
-                try:
-                    yield scrapy.Request(img)
-                except Exception as e:
-                    print(e)
-
+class LeroymerlinImagesPipeline(ImagesPipeline):
     def file_path(self, request, response=None, info=None):
-        pass
+        return 'files/' + os.path.basename(urlparse(request.url).path)
 
-
+    def get_media_requests(self, item, info):
+        for image_url in item['image_urls']:
+            yield scrapy.Request(image_url)
 
     def item_completed(self, results, item, info):
-        if results[0]:
-            item['photos'] = [itm[1] for itm in results if itm[0]]
+        image_paths = [x['path'] for ok, x in results if ok]
+        if not image_paths:
+            raise DropItem("Item contains no images")
+        item['image_paths'] = image_paths
         return item
-
-
-

@@ -24,7 +24,7 @@ class LmSpider(scrapy.Spider):
     def item_parse(self, response: HtmlResponse):
         loader = ItemLoader(item=LeroymerlinItem(), response=response)
         loader.add_css('name', "div.product-content h1::text")
-        loader.add_xpath('photos', "//img/@data-origin")
+        loader.add_xpath('image_urls', "//img/@data-origin")
         loader.add_xpath('price', "//span[@slot='price']/text()")
         loader.add_xpath('s_keys', "//dt[@class='def-list__term']/text()")
         loader.add_xpath('s_values', "//dd[@class='def-list__definition']/text()")
