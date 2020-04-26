@@ -20,6 +20,8 @@ class LeroymerlinPipeline(object):
     def process_item(self, item, spider):
         collection = self.mongo_base[spider.name]
         item['specification'] = dict(zip(item['s_keys'], item['s_values']))
+        item.pop('s_keys')
+        item.pop('s_values')
         collection.insert_one(item)
         return item
 
