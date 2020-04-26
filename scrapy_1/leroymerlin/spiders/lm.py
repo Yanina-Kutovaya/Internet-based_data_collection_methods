@@ -28,4 +28,5 @@ class LmSpider(scrapy.Spider):
         loader.add_xpath('price', "//span[@slot='price']/text()")
         loader.add_xpath('s_keys', "//dt[@class='def-list__term']/text()")
         loader.add_xpath('s_values', "//dd[@class='def-list__definition']/text()")
+        loader.add_value('link', response.url)
         yield loader.load_item()

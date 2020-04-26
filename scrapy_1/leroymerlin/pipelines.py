@@ -26,9 +26,17 @@ class LeroymerlinPipeline(object):
 
 class LeroymerlinImagesPipeline(ImagesPipeline):
     def file_path(self, request, response=None, info=None):
-        return 'files/' + os.path.basename(urlparse(request.url).path)
+        file_name = os.path.basename(urlparse(request.url).path)
+        path = os.getcwd() + '\images'
+        product_list = [x[0] for x in os.walk(path)]
+        for i in product_list:
+            if i[-8:] == file_name[:8]:
+                product = i.split('\\')[-1]
+                return f'{product}/{file_name}'
 
     def get_media_requests(self, item, info):
+        s = 'images/' + item['link'].split('/')[-2].replace('-', '_')
+        os.mkdir(s)
         for image_url in item['image_urls']:
             yield scrapy.Request(image_url)
 
