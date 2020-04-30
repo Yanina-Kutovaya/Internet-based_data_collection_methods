@@ -61,7 +61,7 @@ def get_text(driver, letter):
     driver.back()
     time.sleep(5)
     assert 'Входящие - Почта Mail.ru' in driver.title
-    return content[0].text, driver
+    return content[0].text
 
 
 if __name__ == '__main__':
@@ -75,7 +75,7 @@ if __name__ == '__main__':
         df['author'] = letter.find_element_by_xpath(".//span[@class='ll-crpt']").text
         df['Re'] = letter.find_element_by_xpath(".//span[@class='ll-sj__normal']").text
         df['date'] = letter.find_element_by_xpath(".//div[@class='llc__item llc__item_date']").text
-        #df['text'], driver = get_text(driver, letter)
+        #df['text'] = get_text(driver, letter)
         db[n] = df
         n += 1
     driver.quit()
