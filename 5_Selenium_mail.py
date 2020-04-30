@@ -37,8 +37,8 @@ def authorization():
     password_input.send_keys(password)
     password_input.submit()
 
-    letters = WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located(
-        (By.XPATH,"//a[@class='llc js-tooltip-direction_letter-bottom js-letter-list-item llc_pony-mode llc_normal']")))
+    letters = WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.XPATH,
+        "//a[@class='llc js-tooltip-direction_letter-bottom js-letter-list-item llc_pony-mode llc_normal']")))
     assert 'Входящие - Почта Mail.ru' in driver.title
 
     return letters, driver
@@ -53,31 +53,31 @@ def scroll(letters, driver):
     return letters, driver
 
 
-def get_text(driver, letter):
-    driver.get(letter.get_attribute('href'))
-    content = WebDriverWait(driver, 10).\
-        until(EC.presence_of_all_elements_located((By.XPATH, ".//div[@class='WordSection1_mailru_css_attribute_postfix']")))
-    assert 'Почта Mail.ru' in driver.title
-    driver.back()
-    time.sleep(5)
-    assert 'Входящие - Почта Mail.ru' in driver.title
-    return content[0].text
-
-
 if __name__ == '__main__':
     letters, driver = authorization()
     letters, driver = scroll(letters, driver)
 
     db = {}
     n = 0
+    href = []
     for letter in letters:
         df = {}
         df['author'] = letter.find_element_by_xpath(".//span[@class='ll-crpt']").text
         df['Re'] = letter.find_element_by_xpath(".//span[@class='ll-sj__normal']").text
         df['date'] = letter.find_element_by_xpath(".//div[@class='llc__item llc__item_date']").text
-        #df['text'] = get_text(driver, letter)
+        href.append(letter.get_attribute('href'))
         db[n] = df
         n += 1
+    for i in range(n):
+        driver.get(href[i])
+        content = WebDriverWait(driver, 10). \
+            until(EC.presence_of_all_elements_located((By.XPATH,
+                                                       ".//div[@class='letter-body__body']")))
+        assert 'Почта Mail.ru' in driver.title
+        db[i]['text'] = content[0].text
+        driver.back()
+        time.sleep(5)
+        assert 'Входящие - Почта Mail.ru' in driver.title
     driver.quit()
 
     client = MongoClient('localhost', 27017)
