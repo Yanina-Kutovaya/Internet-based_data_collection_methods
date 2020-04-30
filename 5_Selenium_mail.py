@@ -75,7 +75,7 @@ if __name__ == '__main__':
         df['author'] = letter.find_element_by_xpath(".//span[@class='ll-crpt']").text
         df['Re'] = letter.find_element_by_xpath(".//span[@class='ll-sj__normal']").text
         df['date'] = letter.find_element_by_xpath(".//div[@class='llc__item llc__item_date']").text
-        #df['text'], driver = get_text(driver)
+        #df['text'], driver = get_text(driver, letter)
         db[n] = df
         n += 1
     driver.quit()
