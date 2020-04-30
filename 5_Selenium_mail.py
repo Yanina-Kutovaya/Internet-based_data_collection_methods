@@ -37,8 +37,7 @@ def authorization():
     password_input.send_keys(password)
     password_input.submit()
 
-    letters = WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.XPATH,
-        "//a[@class='llc js-tooltip-direction_letter-bottom js-letter-list-item llc_pony-mode llc_normal']")))
+    letters = WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.XPATH, "//a[@class='llc js-tooltip-direction_letter-bottom js-letter-list-item llc_pony-mode llc_normal']")))
     assert 'Входящие - Почта Mail.ru' in driver.title
 
     return letters, driver
@@ -86,16 +85,3 @@ if __name__ == '__main__':
     for i in db:
         db_list.append(db[i])
     mail.letters.insert_many([i for i in db_list])
-
-
-
-
-
-
-
-
-
-
-
-
-
