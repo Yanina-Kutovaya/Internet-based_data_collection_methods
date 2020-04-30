@@ -53,9 +53,9 @@ def scroll(letters, driver):
     return letters, driver
 
 
-def get_text(driver):
+def get_text(driver, letter):
     driver.get(letter.get_attribute('href'))
-    content = WebDriverWait(driver, 10). \
+    content = WebDriverWait(driver, 10).\
         until(EC.presence_of_all_elements_located((By.XPATH, ".//div[@class='WordSection1_mailru_css_attribute_postfix']")))
     assert 'Почта Mail.ru' in driver.title
     driver.back()
