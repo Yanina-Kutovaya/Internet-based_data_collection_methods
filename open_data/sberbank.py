@@ -21,6 +21,8 @@ time_cond = (df['date'] > t1) & (df['date'] < t2)
 result = df[dtype_cond & region_cond & time_cond]
 print(result)
 
+plt.style.use('fivethirtyeight')
+plt.subplots(figsize=(16, 8))
 plt.plot(result.date, result.value)
 plt.ylabel('value')
 plt.xlabel('time')
