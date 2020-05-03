@@ -23,8 +23,8 @@ def parse_items(hit_sales, db):
     return db
 
 
-def scroll(driver):
-    driver.find_elements_by_xpath("//a[@class='next-btn sel-hits-button-next']")[2].click()
+def scroll(driver):    
+    driver.find_elements_by_class_name('sel-hits-button-next')[2].click()
     time.sleep(5)
     hit_sales = WebDriverWait(driver, 20).until(
         EC.presence_of_all_elements_located((By.CLASS_NAME, 'accessories-product-list')))[2]
